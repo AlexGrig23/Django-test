@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+    <h2 class="text-center">USERS</h2>
+    <table class="table">
+        <thead>
+            <tr>
+            <th class="text-center">USER NAME</th>
+            <th class="text-center">CREATED</th>
+            <th class="text-center">GROUP</th>
+            <th class="text-center">ACTIONS</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td class="text-center">{{ user.user_name }}</td>
+                <td class="text-center">{{ user.created_at }}</td>
+                <td class="text-center">{{ user.group.title }}</td>
+                <td class="text-center">
+                    <a href="{% url 'edit_user' user.pk %}"
+                       class="btn btn-outline-primary text-secondary border-secondary">Edit</a>
+                    <a href="{% url 'delete_user' user.pk %}"
+                       class="btn btn-outline-danger text-secondary border-secondary">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center mt-3">
+        <a href="{% url 'create_user' %}"
+           class="btn btn-outline-primary text-secondary border-secondary">Create user</a>
+
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center align-items-center" style="height: 10vh;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item mr-1">
+                <a class="page-link btn btn-outline-primary {% if page_obj.number == page_obj.previous_page_number %}active text-dark{% endif %} border-secondary"
+                   href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled mr-1">
+                <a class="page-link btn btn-outline-primary text-secondary border-secondary"
+                   href="#" tabindex="-1" aria-disabled="true">&laquo;</a>
+            </li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active  mr-1">
+                        <a class="page-link btn btn-outline-primary {% if page_obj.number == i %}active text-dark{% endif %} border-secondary"
+                           href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item mr-1">
+                        <a class="page-link btn btn-outline-primary text-secondary border-secondary"
+                           href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item mr-1">
+                    <a class="page-link btn btn-outline-primary {% if page_obj.number == page_obj.next_page_number %}active text-dark{% endif %} border-secondary"
+                       href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled mr-1">
+                    <a class="page-link btn btn-outline-primary text-secondary border-secondary"
+                       href="#" tabindex="-1" aria-disabled="true">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+{% endblock %}
