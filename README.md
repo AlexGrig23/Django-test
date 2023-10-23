@@ -1,5 +1,5 @@
 # VNV Test task
-Цeb application in Django according to the technical specifications
+Web application in Django according to the technical specifications
 
 ## Description
 The application can be launched in 2 ways, using Docker or locally, but for this you will need to create a database.
@@ -12,7 +12,7 @@ Credentials have been added to the .env.example file so that you can deploy the 
 **1. Clone the repository:**
 
    ```shell
-   git clone 
+   git clone https://github.com/AlexGrig23/test.git
    ```
 
   Create virtual env.
